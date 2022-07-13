@@ -5,3 +5,4 @@ Game made for GMTK game jam 2022 by:
 - pm-coding
 - Orichalium
 - Gamers
+- Warmersnow
