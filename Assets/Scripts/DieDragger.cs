@@ -28,7 +28,6 @@ public class DieDragger : MonoBehaviour
             Die dieClicked = null;
             if (Physics.Raycast(mouseRay, out hit, Mathf.Infinity, Die.DIE_LAYER))
             {
-                Debug.Log(hit.collider.name);
                 dieClicked = hit.collider.GetComponent<Die>();
                 Assert.IsNotNull(dieClicked);
                 grabbedDice.Add(dieClicked);
