@@ -23,14 +23,21 @@ public class Die : MonoBehaviour
     private static Vector3 SIDE_1_VEC = new Vector3(0, -1, 0);
     private static Vector3 SIDE_4_VEC = new Vector3(0, 0, 1);
 
+
     [Serializable]
-    public class DieEvent : UnityEvent<int> { }
-    public DieEvent side1Event;
-    public DieEvent side2Event;
-    public DieEvent side3Event;
-    public DieEvent side4Event;
-    public DieEvent side5Event;
-    public DieEvent side6Event;
+    public struct DieRollData
+    {
+        public int side;
+    }
+    [Serializable]
+    public class DieRollEvent : UnityEvent<DieRollData> { }
+    public DieRollEvent anyRollEvent;
+    public DieRollEvent side1Event;
+    public DieRollEvent side2Event;
+    public DieRollEvent side3Event;
+    public DieRollEvent side4Event;
+    public DieRollEvent side5Event;
+    public DieRollEvent side6Event;
 
     private int SideUp
     {
@@ -100,14 +107,19 @@ public class Die : MonoBehaviour
         {
             var sideUp = SideUp;
             Debug.Log("Rolled a " + sideUp);
+            var rollData = new DieRollData
+            {
+                side = sideUp,
+            };
+            anyRollEvent.Invoke(rollData);
             switch (sideUp)
             {
-                case 1: side1Event.Invoke(1); break;
-                case 2: side2Event.Invoke(2); break;
-                case 3: side3Event.Invoke(3); break;
-                case 4: side4Event.Invoke(4); break;
-                case 5: side5Event.Invoke(5); break;
-                case 6: side6Event.Invoke(6); break;
+                case 1: side1Event.Invoke(rollData); break;
+                case 2: side2Event.Invoke(rollData); break;
+                case 3: side3Event.Invoke(rollData); break;
+                case 4: side4Event.Invoke(rollData); break;
+                case 5: side5Event.Invoke(rollData); break;
+                case 6: side6Event.Invoke(rollData); break;
                 default: throw new InvalidOperationException();
             }
         }

@@ -955,5 +955,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.PhysicMaterial, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
