@@ -30,6 +30,12 @@ public class Die : MonoBehaviour
     {
         get { return state == DieState.Rolling; }
     }
+
+    public bool Active
+    {
+        get { return state == DieState.Activated; }
+    }
+
     private bool inDiceTray = false;
 
     private Vector3 dragDestination = Vector3.zero;
