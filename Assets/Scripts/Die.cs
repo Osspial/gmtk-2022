@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 
@@ -8,13 +11,37 @@ public class Die : MonoBehaviour
 {
     public const int DIE_LAYER = 1 << 6;
 
-    private bool InDrag { get; set; }
+    [Serializable]
+    private enum DieState
+    {
+        Idle,
+        InDrag,
+        Rolling,
+        Activated
+    }
+
+    [SerializeField]
+    private DieState state = DieState.Idle;
+    private bool InDrag
+    {
+        get { return state == DieState.InDrag; }
+    }
+    private bool Rolling
+    {
+        get { return state == DieState.Rolling; }
+    }
+    private bool inDiceTray = false;
+
     private Vector3 dragDestination = Vector3.zero;
     private Vector3 dragOffset = Vector3.zero;
-    private new Rigidbody rigidbody;
+    public new Rigidbody rigidbody { get { return this.GetComponent<Rigidbody>();  } }
     public float releaseTorqueScale = 2.0f;
     public float maxGrabRaiseVelocity = 30.0f;
     private Vector3 lastAngularVelocity = Vector3.zero;
+    private Vector3 lastPhysicsPosition = Vector3.zero;
+    private Vector3 velocityInDrag = Vector3.zero;
+    public int dragSpeedSmoothingFrames = 3;
+    private List<float> lastFewDragSpeeds = new List<float>();
 
     private static Vector3 SIDE_6_VEC = new Vector3(0, 1, 0);
     private static Vector3 SIDE_2_VEC = new Vector3(-1, 0, 0);
@@ -78,77 +105,122 @@ public class Die : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-        this.rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (InDrag)
+        {
+            Assert.IsTrue(rigidbody.isKinematic);
+            transform.position = dragDestination;
+            //var position = transform.position;
+            //var targetDelta = dragDestination - position;
+            //var targetVelocity = (dragDestination - position).normalized;
+            //targetVelocity.y = Mathf.Min(targetVelocity.y, maxGrabRaiseVelocity);
+            //rigidbody.AddForce(targetVelocity, ForceMode.VelocityChange);
+            // rigidbody.velocity = targetVelocity;
+            // rigidbody.AddForce(targetVelocity - rigidbody.velocity, ForceMode.VelocityChange);
+            // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
+        }
     }
-
-
-
     private void FixedUpdate()
     {
         if (InDrag)
         {
-            var position = transform.position;
-            var targetVelocity = (dragDestination - position) / Time.fixedDeltaTime;
-            targetVelocity.y = Mathf.Min(targetVelocity.y, maxGrabRaiseVelocity);
-            rigidbody.velocity = targetVelocity;
-            // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
-        }
-        var av = rigidbody.angularVelocity;
-        var lav = lastAngularVelocity;
-        var rollingThisFrame = !(Mathf.Approximately(av.x, 0) && Mathf.Approximately(av.z, 0));
-        var rollingLastFrame = !(Mathf.Approximately(lav.x, 0) && Mathf.Approximately(lav.z, 0));
-        // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
-        if (rollingLastFrame && !rollingThisFrame)
+            Assert.IsTrue(rigidbody.isKinematic);
+            velocityInDrag = (transform.position - lastPhysicsPosition) / Time.deltaTime;
+            lastFewDragSpeeds.Add(velocityInDrag.magnitude);
+            if (lastFewDragSpeeds.Count > dragSpeedSmoothingFrames)
+            {
+                lastFewDragSpeeds.RemoveAt(0);
+            }
+        }   
+        if (Rolling)
         {
-            var sideUp = SideUp;
-            Debug.Log("Rolled a " + sideUp);
-            var rollData = new DieRollData
+            var av = rigidbody.angularVelocity;
+            var lav = lastAngularVelocity;
+            var rollingThisFrame = !(Mathf.Approximately(av.x, 0) && Mathf.Approximately(av.z, 0));
+            var rollingLastFrame = !(Mathf.Approximately(lav.x, 0) && Mathf.Approximately(lav.z, 0));
+            // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
+            if (rollingLastFrame && !rollingThisFrame)
             {
-                side = sideUp,
-            };
-            anyRollEvent.Invoke(rollData);
-            switch (sideUp)
-            {
-                case 1: side1Event.Invoke(rollData); break;
-                case 2: side2Event.Invoke(rollData); break;
-                case 3: side3Event.Invoke(rollData); break;
-                case 4: side4Event.Invoke(rollData); break;
-                case 5: side5Event.Invoke(rollData); break;
-                case 6: side6Event.Invoke(rollData); break;
-                default: throw new InvalidOperationException();
+                Debug.Log("Rolling stopped! In dice tray? " + inDiceTray);
+                if (inDiceTray)
+                {
+                    this.state = DieState.Idle;
+                } else
+                {
+                    var sideUp = SideUp;
+                    var rollData = new DieRollData
+                    {
+                        side = sideUp,
+                    };
+                    Debug.Log("Rolled a " + sideUp);
+                    anyRollEvent.Invoke(rollData);
+                    switch (sideUp)
+                    {
+                        case 1: side1Event.Invoke(rollData); break;
+                        case 2: side2Event.Invoke(rollData); break;
+                        case 3: side3Event.Invoke(rollData); break;
+                        case 4: side4Event.Invoke(rollData); break;
+                        case 5: side5Event.Invoke(rollData); break;
+                        case 6: side6Event.Invoke(rollData); break;
+                        default: throw new InvalidOperationException();
+                    }
+                    this.state = DieState.Activated;
+                }
             }
         }
-        lastAngularVelocity = av;
+        
+        lastAngularVelocity = rigidbody.angularVelocity;
+        lastPhysicsPosition = transform.position;
     }
 
-    public void StartDrag(RaycastHit grab)
+    public bool StartDrag(RaycastHit grab)
     {
-        this.InDrag = true;
+        if (!inDiceTray && this.state != DieState.Idle) return false;
+        this.state = DieState.InDrag;
         rigidbody.useGravity = false;
         rigidbody.freezeRotation = true;
+        rigidbody.isKinematic = true;
         dragOffset = grab.point - transform.position;
+
+        return true;
     }
 
     public void EndDrag()
     {
-        this.InDrag = false;
+        this.state = DieState.Rolling;
         rigidbody.useGravity = true;
         rigidbody.freezeRotation = false;
+        rigidbody.isKinematic = false;
 
+        Assert.IsTrue(lastFewDragSpeeds.Count <= dragSpeedSmoothingFrames);
+        var magnitude = (float) lastFewDragSpeeds.Average();
+        rigidbody.velocity = velocityInDrag.normalized * magnitude;
+        lastFewDragSpeeds.Clear();
 
-        // rigidbody.AddTorque(rigidbody.velocity);
-        // rigidbody.AddTorque(new Vector3(1, 0, 0));
-        var torque = releaseTorqueScale * new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
+        var torqueScale = UnityEngine.Random.Range(0.5f, 1.0f);
+        var torque = new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
+        torque += Vector3.Cross(Vector3.up, torque);
+        torque *= releaseTorqueScale * torqueScale;
         rigidbody.AddTorque(torque);
     }
 
     public void DragTo(Vector3 position)
     {
+        if (!InDrag) throw new InvalidOperationException("DragTo only valid while in drag state");
         dragDestination = position;
+    }
+
+    public void EnterDiceTray()
+    {
+        this.inDiceTray = true;
+    }
+
+    public void ExitDiceTray()
+    {
+        this.inDiceTray = false;
     }
 }
