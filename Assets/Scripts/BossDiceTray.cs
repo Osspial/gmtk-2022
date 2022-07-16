@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 public class BossDiceTray : MonoBehaviour
@@ -11,6 +12,10 @@ public class BossDiceTray : MonoBehaviour
     [SerializeField]
     private int neededValue;
 
+    [SerializeField]
+    private UnityEvent Completed;
+    //public class CompletionEvent : UnityEvent { }
+    //public CompletionEvent CE;
 
     private enum TrayState
     {
@@ -31,13 +36,20 @@ public class BossDiceTray : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(DieBeingHeld != null)
+        if (CurrentState == TrayState.Empty)
         {
-            int dieRollData = DieBeingHeld.SideUp;
-            if(neededValue != dieRollData)
+            if (DieBeingHeld != null)
             {
-                Destroy(DieBeingHeld.gameObject);
-                DieBeingHeld = null;
+                int dieRollData = DieBeingHeld.SideUp;
+                if (neededValue != dieRollData)
+                {
+                    Destroy(DieBeingHeld.gameObject);
+                    DieBeingHeld = null;
+                }
+                else
+                {
+                    CorrectDie();
+                }
             }
         }
     }
@@ -74,6 +86,7 @@ public class BossDiceTray : MonoBehaviour
     private void CorrectDie()
     {
         CurrentState = TrayState.Satisfied;
+        Completed.Invoke();
     }
 
     //changes the state to inactive, called once a boss fight is done

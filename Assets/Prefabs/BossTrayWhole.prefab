@@ -58,6 +58,7 @@ MonoBehaviour:
   - {fileID: 2464992778904484899}
   - {fileID: 6837056004229856069}
   BossTray: []
+  CurrentBoss: {fileID: 0}
 --- !u!1 &8563530017049722206
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +146,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossTraySlot6
       objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755489859092909244}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompletedTray
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
 --- !u!4 &1465091989974061724 stripped
@@ -211,6 +240,34 @@ PrefabInstance:
     - target: {fileID: 5095842313515943464, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
       propertyPath: m_Name
       value: BossTraySlot1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755489859092909244}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompletedTray
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
@@ -279,6 +336,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossTraySlot4
       objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755489859092909244}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompletedTray
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
 --- !u!1 &901368749656326132 stripped
@@ -345,6 +430,34 @@ PrefabInstance:
     - target: {fileID: 5095842313515943464, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
       propertyPath: m_Name
       value: BossTraySlot2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755489859092909244}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompletedTray
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
@@ -413,6 +526,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossTraySlot5
       objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755489859092909244}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompletedTray
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
 --- !u!1 &2464992778904484899 stripped
@@ -479,6 +620,34 @@ PrefabInstance:
     - target: {fileID: 5095842313515943464, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
       propertyPath: m_Name
       value: BossTraySlot3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755489859092909244}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompletedTray
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431095630538961553, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
+      propertyPath: Completed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ced4c51742b740548a5424e7da3ed3ee, type: 3}
