@@ -11,6 +11,8 @@ public class Damageable : MonoBehaviour
 
     public float forceDamageMultiplier = 1.0f;
 
+    public DamageText damageTextPrototype;
+
     public enum DamageType
     {
         // look at the 5e damage types if you want inspiration
@@ -32,8 +34,10 @@ public class Damageable : MonoBehaviour
         var totalDamage = damage * multiplier;
         Debug.Log(gameObject.name + " takes " + totalDamage + " damage");
         health -= totalDamage;
+        var damageText = Object.Instantiate(damageTextPrototype, transform.position, Quaternion.Euler(0, 0, 0));
+        damageText.damageValue = totalDamage;
 
-        if (health < 0)
+        if (health <= 0)
         {
             BeginDeath();
         }

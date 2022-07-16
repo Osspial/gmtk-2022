@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class RotationLock : MonoBehaviour
 {
+    public enum LockMode
+    {
+        Zero,
+    }
+    public LockMode mode = LockMode.Zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +18,12 @@ public class RotationLock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        switch (mode)
+        {
+            case LockMode.Zero:
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;
+        }
+        
     }
 }

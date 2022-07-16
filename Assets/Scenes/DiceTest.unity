@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 885291987}
   - component: {fileID: 885291986}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Damageable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   forceDamageMultiplier: 1
+  damageTextPrototype: {fileID: 2898882426294038781, guid: 499236f5ec1dcdf44807fdea0863233f, type: 3}
   onKilled:
     m_PersistentCalls:
       m_Calls:
