@@ -6,13 +6,11 @@ using TMPro;
 public class DeathSceneScript : MonoBehaviour
 {
 	public Score finalscore;
-	public GameObject DeathInfo;
 	public TextMeshProUGUI scoreInfo;
     // Start is called before the first frame update
     void Start()
     {
-		DeathInfo.SetActive(true);
-        scoreInfo.text = "Score: "+finalscore.score;
+       scoreInfo.text = "Score: "+finalscore.score;
     }
 
 	 public void PlayNowButton()

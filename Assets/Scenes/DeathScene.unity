@@ -392,7 +392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalscore: {fileID: 11400000, guid: 67a6e8a53b4d6a341b2d357c9b30389d, type: 2}
-  DeathInfo: {fileID: 150164425}
   scoreInfo: {fileID: 202031090}
 --- !u!1 &202031088
 GameObject:
@@ -545,8 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalscore: {fileID: 11400000, guid: 67a6e8a53b4d6a341b2d357c9b30389d, type: 2}
-  DeathInfo: {fileID: 0}
-  scoreInfo: {fileID: 0}
+  scoreInfo: {fileID: 202031090}
 --- !u!1 &233975503
 GameObject:
   m_ObjectHideFlags: 0
