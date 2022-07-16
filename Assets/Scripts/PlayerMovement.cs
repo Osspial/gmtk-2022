@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //Input
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        movement.z = 0;
+        movement.y = 0;
+        movement.z = Input.GetAxisRaw("Vertical");
 
 
     }
