@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 [RequireComponent(typeof(Collider))]
 public class BossDiceTray : MonoBehaviour
@@ -14,8 +15,9 @@ public class BossDiceTray : MonoBehaviour
 
     [SerializeField]
     private UnityEvent Completed;
-    //public class CompletionEvent : UnityEvent { }
-    //public CompletionEvent CE;
+
+    [SerializeField]
+    private GameObject text;
 
     private enum TrayState
     {
@@ -31,6 +33,8 @@ public class BossDiceTray : MonoBehaviour
     void Start()
     {
         CurrentState = TrayState.Inactive;
+        text.GetComponent<TextMeshPro>().text = "";
+        //text.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     // Update is called once per frame
@@ -83,12 +87,14 @@ public class BossDiceTray : MonoBehaviour
     {
         setValue(val);
         CurrentState = TrayState.Empty;
+        text.GetComponent<TextMeshPro>().text = val.ToString();
     }
 
     //Called when this tray recieves the correct die changing state to satisfied
     private void CorrectDie()
     {
         CurrentState = TrayState.Satisfied;
+        text.GetComponent<TextMeshPro>().text = "";
         Completed.Invoke();
     }
 
