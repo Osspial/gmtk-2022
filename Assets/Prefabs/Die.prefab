@@ -131,6 +131,7 @@ MonoBehaviour:
   state: 0
   releaseTorqueScale: 2
   maxGrabRaiseVelocity: 30
+  dragSpeedSmoothingFrames: 10
   anyRollEvent:
     m_PersistentCalls:
       m_Calls: []

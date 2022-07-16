@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -38,6 +40,8 @@ public class Die : MonoBehaviour
     private Vector3 lastAngularVelocity = Vector3.zero;
     private Vector3 lastPhysicsPosition = Vector3.zero;
     private Vector3 velocityInDrag = Vector3.zero;
+    public int dragSpeedSmoothingFrames = 3;
+    private List<float> lastFewDragSpeeds = new List<float>();
 
     private static Vector3 SIDE_6_VEC = new Vector3(0, 1, 0);
     private static Vector3 SIDE_2_VEC = new Vector3(-1, 0, 0);
@@ -126,6 +130,11 @@ public class Die : MonoBehaviour
         {
             Assert.IsTrue(rigidbody.isKinematic);
             velocityInDrag = (transform.position - lastPhysicsPosition) / Time.deltaTime;
+            lastFewDragSpeeds.Add(velocityInDrag.magnitude);
+            if (lastFewDragSpeeds.Count > dragSpeedSmoothingFrames)
+            {
+                lastFewDragSpeeds.RemoveAt(0);
+            }
         }   
         if (Rolling)
         {
@@ -186,8 +195,11 @@ public class Die : MonoBehaviour
         rigidbody.useGravity = true;
         rigidbody.freezeRotation = false;
         rigidbody.isKinematic = false;
-        rigidbody.velocity = velocityInDrag;
 
+        Assert.IsTrue(lastFewDragSpeeds.Count <= dragSpeedSmoothingFrames);
+        var magnitude = (float) lastFewDragSpeeds.Average();
+        rigidbody.velocity = velocityInDrag.normalized * magnitude;
+        lastFewDragSpeeds.Clear();
 
         var torqueScale = UnityEngine.Random.Range(0.5f, 1.0f);
         var torque = new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
