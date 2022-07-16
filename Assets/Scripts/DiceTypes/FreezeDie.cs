@@ -6,27 +6,34 @@ using UnityEngine;
 public class FreezeDie : MonoBehaviour
 {
 	private HashSet<EnemyMovement> marks = new HashSet<EnemyMovement>();
-	int freeze;
-	
+    int freeze;
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        var freezable = collision.gameObject.GetComponent<EnemyMovement>();
+        if (freezable == null) return;
+        marks.Add(freezable);
+        Debug.Log("collide with " + collision.gameObject.name);
+    }
+
     public void RollEvent(Die.DieRollData rollData)
     {
-		Debug.Log("Please Work");
         freeze = rollData.side;
 		StartCoroutine(FreezeEnemy());
     }
 	public IEnumerator FreezeEnemy() 
 	{
-		float oldSpeed = 0.00f;
 		foreach (var m in marks)
         {
-			oldSpeed = m.moveSpeed;
-            m.moveSpeed = 0.00f;
-			Debug.Log("Speed Frozen");
+            Debug.Log("First Speed: " + m.moveSpeed);
+            m.moveSpeed = m.moveSpeed - 2;
+			Debug.Log("Speed Frozen" +m.moveSpeed);
         }
 		yield return new WaitForSeconds(freeze);
 		foreach (var m in marks)
         {
-            m.moveSpeed = oldSpeed;
+            m.moveSpeed = m.moveSpeed + 2;
+            Debug.Log("Second Speed: "+m.moveSpeed);
         }
-	}
+    }
 }
