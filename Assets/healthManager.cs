@@ -17,7 +17,10 @@ public class healthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //TODO: DEATH CHECK/GAME OVER
+        if (curHP == 0) {
+			//does any other info needs to be sent upon death? any animations?
+			UnityEngine.SceneManagement.SceneManager.LoadScene("DeathScene");
+		}
     }
 
     public void takeDamage(float damage)
