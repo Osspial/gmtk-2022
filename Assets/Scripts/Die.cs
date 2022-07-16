@@ -171,9 +171,10 @@ public class Die : MonoBehaviour
         rigidbody.freezeRotation = false;
 
 
-        // rigidbody.AddTorque(rigidbody.velocity);
-        // rigidbody.AddTorque(new Vector3(1, 0, 0));
-        var torque = releaseTorqueScale * new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
+        var torqueScale = UnityEngine.Random.Range(0.5f, 1.0f);
+        var torque = new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
+        torque += Vector3.Cross(Vector3.up, torque);
+        torque *= releaseTorqueScale * torqueScale;
         rigidbody.AddTorque(torque);
     }
 
