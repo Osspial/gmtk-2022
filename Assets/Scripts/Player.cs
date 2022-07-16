@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
     public float movespeed = 5f;
     public Rigidbody rb;
-
+	public Score calcscore;
     Vector3 movement;
 
     private void Start()
@@ -28,8 +28,11 @@ public class Player : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = 0;
         movement.z = Input.GetAxisRaw("Vertical");
-
-
+		//Score
+		calcscore.score = (int) Time.timeSinceLevelLoad;
+		
+		//for debugging if needed
+		//Debug.Log(calcscore.score);
     }
 
     private void FixedUpdate()
