@@ -30,8 +30,10 @@ public class DieDragger : MonoBehaviour
             {
                 dieClicked = hit.collider.GetComponent<Die>();
                 Assert.IsNotNull(dieClicked);
-                grabbedDice.Add(dieClicked);
-                dieClicked.StartDrag(hit);
+                if (dieClicked.StartDrag(hit))
+                {
+                    grabbedDice.Add(dieClicked);
+                }
             }
         }
         if (Input.GetMouseButtonUp(0))

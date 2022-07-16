@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &156576223201283429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6582239488617362956}
+  m_Layer: 0
+  m_Name: DieSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6582239488617362956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156576223201283429}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.67, z: -13.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8100601082539884067}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2043024454252894306
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +158,7 @@ Transform:
   m_Children:
   - {fileID: 1040151762999666894}
   - {fileID: 3558360958873400383}
+  - {fileID: 6582239488617362956}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -612,3 +644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685a3a02e0d0aee49be33bc06f6fd55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieSpawnPoint: {fileID: 156576223201283429}
+  dieTemplate: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+  spawnMinSpeed: 20
+  spawnMaxSpeed: 70
+  spawnAngleRange: 20

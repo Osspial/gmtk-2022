@@ -8,10 +8,30 @@ public class Die : MonoBehaviour
 {
     public const int DIE_LAYER = 1 << 6;
 
-    private bool InDrag { get; set; }
+    [Serializable]
+    private enum DieState
+    {
+        Idle,
+        InDrag,
+        Rolling,
+        Activated
+    }
+
+    [SerializeField]
+    private DieState state = DieState.Idle;
+    private bool InDrag
+    {
+        get { return state == DieState.InDrag; }
+    }
+    private bool Rolling
+    {
+        get { return state == DieState.Rolling; }
+    }
+    private bool inDiceTray = false;
+
     private Vector3 dragDestination = Vector3.zero;
     private Vector3 dragOffset = Vector3.zero;
-    private new Rigidbody rigidbody;
+    public new Rigidbody rigidbody { get { return this.GetComponent<Rigidbody>();  } }
     public float releaseTorqueScale = 2.0f;
     public float maxGrabRaiseVelocity = 30.0f;
     private Vector3 lastAngularVelocity = Vector3.zero;
@@ -78,16 +98,12 @@ public class Die : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-        this.rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-
-
-
     private void FixedUpdate()
     {
         if (InDrag)
@@ -97,46 +113,60 @@ public class Die : MonoBehaviour
             targetVelocity.y = Mathf.Min(targetVelocity.y, maxGrabRaiseVelocity);
             rigidbody.velocity = targetVelocity;
             // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
-        }
-        var av = rigidbody.angularVelocity;
-        var lav = lastAngularVelocity;
-        var rollingThisFrame = !(Mathf.Approximately(av.x, 0) && Mathf.Approximately(av.z, 0));
-        var rollingLastFrame = !(Mathf.Approximately(lav.x, 0) && Mathf.Approximately(lav.z, 0));
-        // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
-        if (rollingLastFrame && !rollingThisFrame)
+        } else if (Rolling)
         {
-            var sideUp = SideUp;
-            Debug.Log("Rolled a " + sideUp);
-            var rollData = new DieRollData
+            var av = rigidbody.angularVelocity;
+            var lav = lastAngularVelocity;
+            var rollingThisFrame = !(Mathf.Approximately(av.x, 0) && Mathf.Approximately(av.z, 0));
+            var rollingLastFrame = !(Mathf.Approximately(lav.x, 0) && Mathf.Approximately(lav.z, 0));
+            // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
+            if (rollingLastFrame && !rollingThisFrame)
             {
-                side = sideUp,
-            };
-            anyRollEvent.Invoke(rollData);
-            switch (sideUp)
-            {
-                case 1: side1Event.Invoke(rollData); break;
-                case 2: side2Event.Invoke(rollData); break;
-                case 3: side3Event.Invoke(rollData); break;
-                case 4: side4Event.Invoke(rollData); break;
-                case 5: side5Event.Invoke(rollData); break;
-                case 6: side6Event.Invoke(rollData); break;
-                default: throw new InvalidOperationException();
+                Debug.Log("Rolling stopped! In dice tray? " + inDiceTray);
+                if (inDiceTray)
+                {
+                    this.state = DieState.Idle;
+                } else
+                {
+                    var sideUp = SideUp;
+                    var rollData = new DieRollData
+                    {
+                        side = sideUp,
+                    };
+                    Debug.Log("Rolled a " + sideUp);
+                    anyRollEvent.Invoke(rollData);
+                    switch (sideUp)
+                    {
+                        case 1: side1Event.Invoke(rollData); break;
+                        case 2: side2Event.Invoke(rollData); break;
+                        case 3: side3Event.Invoke(rollData); break;
+                        case 4: side4Event.Invoke(rollData); break;
+                        case 5: side5Event.Invoke(rollData); break;
+                        case 6: side6Event.Invoke(rollData); break;
+                        default: throw new InvalidOperationException();
+                    }
+                    this.state = DieState.Activated;
+                }
             }
         }
-        lastAngularVelocity = av;
+        
+        lastAngularVelocity = rigidbody.angularVelocity;
     }
 
-    public void StartDrag(RaycastHit grab)
+    public bool StartDrag(RaycastHit grab)
     {
-        this.InDrag = true;
+        if (!inDiceTray && this.state != DieState.Idle) return false;
+        this.state = DieState.InDrag;
         rigidbody.useGravity = false;
         rigidbody.freezeRotation = true;
         dragOffset = grab.point - transform.position;
+
+        return true;
     }
 
     public void EndDrag()
     {
-        this.InDrag = false;
+        this.state = DieState.Rolling;
         rigidbody.useGravity = true;
         rigidbody.freezeRotation = false;
 
@@ -149,6 +179,17 @@ public class Die : MonoBehaviour
 
     public void DragTo(Vector3 position)
     {
+        if (!InDrag) throw new InvalidOperationException("DragTo only valid while in drag state");
         dragDestination = position;
+    }
+
+    public void EnterDiceTray()
+    {
+        this.inDiceTray = true;
+    }
+
+    public void ExitDiceTray()
+    {
+        this.inDiceTray = false;
     }
 }
