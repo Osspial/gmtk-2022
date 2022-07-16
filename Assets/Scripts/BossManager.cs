@@ -40,6 +40,10 @@ public class BossManager : MonoBehaviour
                 print("You did it!");
                 Destroy(CurrentBoss);
                 activeBoss = false;
+                foreach(BossDiceTray tray in BossTray)
+                {
+                    tray.FinishFight();
+                }
             }
         }
     }
@@ -62,7 +66,6 @@ public class BossManager : MonoBehaviour
 
     public void CompletedTray()
     {
-        print("RUN FROM ME");
         remainingSlots--;
     }
 

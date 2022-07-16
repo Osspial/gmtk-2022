@@ -19,6 +19,12 @@ public class BossDiceTray : MonoBehaviour
     [SerializeField]
     private GameObject text;
 
+    [SerializeField]
+    private GameObject CorrectTop;
+
+    [SerializeField]
+    private GameObject InactiveTop;
+
     private enum TrayState
     {
         Inactive,
@@ -34,7 +40,8 @@ public class BossDiceTray : MonoBehaviour
     {
         CurrentState = TrayState.Inactive;
         text.GetComponent<TextMeshPro>().text = "";
-        //text.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        InactiveTop.SetActive(true);
+        CorrectTop.SetActive(false);
     }
 
     // Update is called once per frame
@@ -88,6 +95,7 @@ public class BossDiceTray : MonoBehaviour
         setValue(val);
         CurrentState = TrayState.Empty;
         text.GetComponent<TextMeshPro>().text = val.ToString();
+        InactiveTop.SetActive(false);
     }
 
     //Called when this tray recieves the correct die changing state to satisfied
@@ -96,12 +104,17 @@ public class BossDiceTray : MonoBehaviour
         CurrentState = TrayState.Satisfied;
         text.GetComponent<TextMeshPro>().text = "";
         Completed.Invoke();
+        CorrectTop.SetActive(true);
+        Destroy(DieBeingHeld.gameObject);
+        DieBeingHeld = null;
     }
 
     //changes the state to inactive, called once a boss fight is done
     public void FinishFight()
     {
         CurrentState = TrayState.Inactive;
+        CorrectTop.SetActive(false);
+        InactiveTop.SetActive(true);
     }
 
     private void setValue(int val)
