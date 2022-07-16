@@ -6,12 +6,13 @@ using TMPro;
 public class DeathSceneScript : MonoBehaviour
 {
 	static int score;
+	public Score finalscore;
 	public GameObject DeathInfo;
 	public TextMeshProUGUI scoreInfo;
     // Start is called before the first frame update
     void Start()
     {
-		score = 42;
+		score = finalscore.score;
         DeathSceneButton();
     }
 
