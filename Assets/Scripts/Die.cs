@@ -66,7 +66,7 @@ public class Die : MonoBehaviour
     public DieRollEvent side5Event;
     public DieRollEvent side6Event;
 
-    private int SideUp
+    public int SideUp
     {
         get
         {
