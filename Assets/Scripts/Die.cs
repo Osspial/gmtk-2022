@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 
@@ -35,6 +36,8 @@ public class Die : MonoBehaviour
     public float releaseTorqueScale = 2.0f;
     public float maxGrabRaiseVelocity = 30.0f;
     private Vector3 lastAngularVelocity = Vector3.zero;
+    private Vector3 lastPhysicsPosition = Vector3.zero;
+    private Vector3 velocityInDrag = Vector3.zero;
 
     private static Vector3 SIDE_6_VEC = new Vector3(0, 1, 0);
     private static Vector3 SIDE_2_VEC = new Vector3(-1, 0, 0);
@@ -103,17 +106,28 @@ public class Die : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (InDrag)
+        {
+            Assert.IsTrue(rigidbody.isKinematic);
+            transform.position = dragDestination;
+            //var position = transform.position;
+            //var targetDelta = dragDestination - position;
+            //var targetVelocity = (dragDestination - position).normalized;
+            //targetVelocity.y = Mathf.Min(targetVelocity.y, maxGrabRaiseVelocity);
+            //rigidbody.AddForce(targetVelocity, ForceMode.VelocityChange);
+            // rigidbody.velocity = targetVelocity;
+            // rigidbody.AddForce(targetVelocity - rigidbody.velocity, ForceMode.VelocityChange);
+            // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
+        }
     }
     private void FixedUpdate()
     {
         if (InDrag)
         {
-            var position = transform.position;
-            var targetVelocity = (dragDestination - position) / Time.fixedDeltaTime;
-            targetVelocity.y = Mathf.Min(targetVelocity.y, maxGrabRaiseVelocity);
-            rigidbody.velocity = targetVelocity;
-            // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
-        } else if (Rolling)
+            Assert.IsTrue(rigidbody.isKinematic);
+            velocityInDrag = (transform.position - lastPhysicsPosition) / Time.deltaTime;
+        }   
+        if (Rolling)
         {
             var av = rigidbody.angularVelocity;
             var lav = lastAngularVelocity;
@@ -151,6 +165,7 @@ public class Die : MonoBehaviour
         }
         
         lastAngularVelocity = rigidbody.angularVelocity;
+        lastPhysicsPosition = transform.position;
     }
 
     public bool StartDrag(RaycastHit grab)
@@ -159,6 +174,7 @@ public class Die : MonoBehaviour
         this.state = DieState.InDrag;
         rigidbody.useGravity = false;
         rigidbody.freezeRotation = true;
+        rigidbody.isKinematic = true;
         dragOffset = grab.point - transform.position;
 
         return true;
@@ -169,6 +185,8 @@ public class Die : MonoBehaviour
         this.state = DieState.Rolling;
         rigidbody.useGravity = true;
         rigidbody.freezeRotation = false;
+        rigidbody.isKinematic = false;
+        rigidbody.velocity = velocityInDrag;
 
 
         var torqueScale = UnityEngine.Random.Range(0.5f, 1.0f);
