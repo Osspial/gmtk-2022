@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -23,6 +22,15 @@ public class Die : MonoBehaviour
     private static Vector3 SIDE_5_VEC = new Vector3(1, 0, 0);
     private static Vector3 SIDE_1_VEC = new Vector3(0, -1, 0);
     private static Vector3 SIDE_4_VEC = new Vector3(0, 0, 1);
+
+    [Serializable]
+    public class DieEvent : UnityEvent<int> { }
+    public DieEvent side1Event;
+    public DieEvent side2Event;
+    public DieEvent side3Event;
+    public DieEvent side4Event;
+    public DieEvent side5Event;
+    public DieEvent side6Event;
 
     private int SideUp
     {
@@ -90,7 +98,18 @@ public class Die : MonoBehaviour
         // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
         if (rollingLastFrame && !rollingThisFrame)
         {
-            Debug.Log("Rolled a " + SideUp);
+            var sideUp = SideUp;
+            Debug.Log("Rolled a " + sideUp);
+            switch (sideUp)
+            {
+                case 1: side1Event.Invoke(1); break;
+                case 2: side2Event.Invoke(2); break;
+                case 3: side3Event.Invoke(3); break;
+                case 4: side4Event.Invoke(4); break;
+                case 5: side5Event.Invoke(5); break;
+                case 6: side6Event.Invoke(6); break;
+                default: throw new InvalidOperationException();
+            }
         }
         lastAngularVelocity = av;
     }
