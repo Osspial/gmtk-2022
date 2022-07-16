@@ -10,6 +10,8 @@ using UnityEngine.Events;
 public class Die : MonoBehaviour
 {
     public const int DIE_LAYER = 1 << 6;
+	private AudioSource source;
+
 
     [Serializable]
     private enum DieState
@@ -30,6 +32,12 @@ public class Die : MonoBehaviour
     {
         get { return state == DieState.Rolling; }
     }
+
+    public bool Active
+    {
+        get { return state == DieState.Activated; }
+    }
+
     private bool inDiceTray = false;
 
     private Vector3 dragDestination = Vector3.zero;
@@ -105,6 +113,7 @@ public class Die : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
+	source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -221,6 +230,10 @@ public class Die : MonoBehaviour
 
     public void ExitDiceTray()
     {
+		source.Play();
         this.inDiceTray = false;
     }
+
+   
+
 }
