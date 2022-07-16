@@ -10,6 +10,7 @@ public class FreezeDie : MonoBehaviour
 	
     public void RollEvent(Die.DieRollData rollData)
     {
+		Debug.Log("Please Work");
         freeze = rollData.side;
 		StartCoroutine(FreezeEnemy());
     }
@@ -20,6 +21,7 @@ public class FreezeDie : MonoBehaviour
         {
 			oldSpeed = m.moveSpeed;
             m.moveSpeed = 0.00f;
+			Debug.Log("Speed Frozen");
         }
 		yield return new WaitForSeconds(freeze);
 		foreach (var m in marks)

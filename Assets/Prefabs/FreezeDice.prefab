@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8854553252309892287}
   - component: {fileID: 8854553252309892272}
   - component: {fileID: 6319015552697815423}
-  - component: {fileID: 4677568968816784079}
+  - component: {fileID: 3506198668269040342}
   m_Layer: 6
   m_Name: FreezeDice
   m_TagString: Untagged
@@ -137,7 +137,7 @@ MonoBehaviour:
   anyRollEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7175460176900391500, guid: 68bef23123c7e954188d9f4df6873721, type: 3}
+      - m_Target: {fileID: 3506198668269040342}
         m_TargetAssemblyTypeName: FreezeDie, Assembly-CSharp
         m_MethodName: RollEvent
         m_Mode: 0
@@ -263,7 +263,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4677568968816784079
+--- !u!114 &3506198668269040342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 778173774715487392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 338ec6ce808771741a3cb6b54f348de3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b7f51602eba4bd4f9baf1872f97bcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8350148686430851429
