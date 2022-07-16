@@ -41,14 +41,17 @@ public class BossDiceTray : MonoBehaviour
             if (DieBeingHeld != null)
             {
                 int dieRollData = DieBeingHeld.SideUp;
-                if (neededValue != dieRollData)
+                if (DieBeingHeld.Active)
                 {
-                    Destroy(DieBeingHeld.gameObject);
-                    DieBeingHeld = null;
-                }
-                else
-                {
-                    CorrectDie();
+                    if (neededValue != dieRollData)
+                    {
+                        Destroy(DieBeingHeld.gameObject);
+                        DieBeingHeld = null;
+                    }
+                    else
+                    {
+                        CorrectDie();
+                    }
                 }
             }
         }
