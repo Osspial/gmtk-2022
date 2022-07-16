@@ -10,15 +10,15 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindWithTag("Player").transform; //Finds the player 
     }
 
     // Update is called once per frame
     void Update()
     {
-        float playerx = player.position.x;
-        float playerz = player.position.z;
-        Vector3 playerlocation = new Vector3(playerx, transform.position.y, playerz);
-        transform.position += (playerlocation - transform.position).normalized * moveSpeed * Time.deltaTime; //Moves directly forward towards player
+        float playerx = player.position.x; //Gets player X coord
+        float playerz = player.position.z; //Gets player Z coord
+        Vector3 playerlocation = new Vector3(playerx, transform.position.y, playerz); //Moves towards player x and z while maintaining current y
+        transform.position += (playerlocation - transform.position).normalized * moveSpeed * Time.deltaTime; //Moves towards player at a constant speed
     }
 }
