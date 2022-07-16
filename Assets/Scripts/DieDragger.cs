@@ -7,11 +7,12 @@ public class DieDragger : MonoBehaviour
 {
     private List<Die> grabbedDice = new List<Die>();
     public Collider dragPlane;
+	private AudioSource source;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class DieDragger : MonoBehaviour
                 if (dieClicked.StartDrag(hit))
                 {
                     grabbedDice.Add(dieClicked);
+					source.Play();
                 }
             }
         }
