@@ -6,7 +6,10 @@ using UnityEngine;
 public class BossDiceTray : MonoBehaviour
 {
     [SerializeField]
-    List<Die> DiceBeingHeld;
+    private Die DieBeingHeld;
+
+    [SerializeField]
+    private int neededValue;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +20,15 @@ public class BossDiceTray : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(DieBeingHeld != null)
+        {
+            int dieRollData = DieBeingHeld.SideUp;
+            if(neededValue != dieRollData)
+            {
+                Destroy(DieBeingHeld.gameObject);
+                DieBeingHeld = null;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +36,19 @@ public class BossDiceTray : MonoBehaviour
         var die = other.GetComponent<Die>();
         if (die == null) return;
 
-        DiceBeingHeld.Add(die);
+        DieBeingHeld = die;
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var die = other.GetComponent<Die>();
+        if (die == null) return;
+
+        if(die == DieBeingHeld)
+        {
+            DieBeingHeld = null;
+        }
 
     }
 
