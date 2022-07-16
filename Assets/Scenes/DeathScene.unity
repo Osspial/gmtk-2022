@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc14702b5b4ae64fba927a22b01d96b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finalscore: {fileID: 0}
+  finalscore: {fileID: 11400000, guid: 67a6e8a53b4d6a341b2d357c9b30389d, type: 2}
   DeathInfo: {fileID: 150164425}
   scoreInfo: {fileID: 202031090}
 --- !u!1 &202031088
