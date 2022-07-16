@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,12 +7,11 @@ using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class Die : MonoBehaviour
 {
     public const int DIE_LAYER = 1 << 6;
 	private AudioSource source;
-
 
     [Serializable]
     private enum DieState
@@ -19,7 +19,8 @@ public class Die : MonoBehaviour
         Idle,
         InDrag,
         Rolling,
-        Activated
+        Activated,
+        Pickup
     }
 
     [SerializeField]
@@ -37,12 +38,18 @@ public class Die : MonoBehaviour
     {
         get { return state == DieState.Activated; }
     }
+    public bool Pickup
+    {
+        get { return state == DieState.Pickup; }
+    }
 
     private bool inDiceTray = false;
 
     private Vector3 dragDestination = Vector3.zero;
     private Vector3 dragOffset = Vector3.zero;
     public new Rigidbody rigidbody { get { return this.GetComponent<Rigidbody>();  } }
+    public Animator animator { get { return this.GetComponent<Animator>(); } }
+    public Collider playerPickupTrigger;
     public float releaseTorqueScale = 2.0f;
     public float maxGrabRaiseVelocity = 30.0f;
     private Vector3 lastAngularVelocity = Vector3.zero;
@@ -181,6 +188,7 @@ public class Die : MonoBehaviour
                 }
             }
         }
+        if (Pickup)
         
         lastAngularVelocity = rigidbody.angularVelocity;
         lastPhysicsPosition = transform.position;
@@ -209,6 +217,7 @@ public class Die : MonoBehaviour
         var magnitude = (float) lastFewDragSpeeds.Average();
         rigidbody.velocity = velocityInDrag.normalized * magnitude;
         lastFewDragSpeeds.Clear();
+        source.Play();
 
         var torqueScale = UnityEngine.Random.Range(0.5f, 1.0f);
         var torque = new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
@@ -230,10 +239,26 @@ public class Die : MonoBehaviour
 
     public void ExitDiceTray()
     {
-		source.Play();
         this.inDiceTray = false;
     }
 
-   
+    public void MakePickup(float delay)
+    {
+        StartCoroutine(MakePickupDelay(delay));
+    }
 
+    private IEnumerator MakePickupDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.SetBool("InPickup", true);
+        rigidbody.isKinematic = true;
+        this.state = DieState.Pickup;
+    }
+
+    public void FinishPickupState()
+    {
+        animator.SetBool("InPickup", false);
+        rigidbody.isKinematic = false;
+        this.state = DieState.Idle;
+    }
 }
