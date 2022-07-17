@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinScene.unity
     guid: ced10dd3a1aaaa2498a7b2f4691ded9d
+  - enabled: 1
+    path: Assets/Scenes/CutsceneDeal.unity
+    guid: 93914440a1014e5428e08a9a9788d679
+  - enabled: 1
+    path: Assets/Scenes/IntroDeath.unity
+    guid: bc87b73836fbac546a6d82667b830586
   m_configObjects: {}

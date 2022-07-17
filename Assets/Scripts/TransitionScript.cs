@@ -26,7 +26,7 @@ public class TransitionScript : MonoBehaviour
     {
         // Quit Game
 		finalscore.score = 0;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DeathScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("IntroDeath");
     }
 	
 	
