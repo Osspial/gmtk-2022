@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public float movespeed = 5f;
     public Rigidbody rb;
 	public Score calcscore;
+    public ListObjectsInTrigger statusEffectTrigger;
+    public float slowSpeedMultiplier = 0.5f;
     Vector3 movement;
 
     private void Start()
@@ -38,7 +40,12 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var delta = movement * movespeed * Time.fixedDeltaTime;
+        if (statusEffectTrigger.GetFirstMatchingCollider<PlayerSlowTrigger>() != null)
+        {
+            delta *= slowSpeedMultiplier;
+        }
         //Movement
-        rb.MovePosition(rb.position + movement * movespeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + delta);
     }
 }
