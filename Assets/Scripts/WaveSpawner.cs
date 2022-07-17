@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,9 +74,9 @@ public class WaveSpawner : MonoBehaviour
                 case WaveStartCondition.OnPreviousWaveStart:
                     break;
             }
-            var currentSpawner = Random.Range(0, spawns.Length);
-            var currentCenterSpawner = Random.Range(0, centerSpawns.Length);
-            var increment = (Random.Range(0, 2) * 2 - 1) * wave.spawnerIncrement;
+            var currentSpawner = UnityEngine.Random.Range(0, spawns.Length);
+            var currentCenterSpawner = UnityEngine.Random.Range(0, centerSpawns.Length);
+            var increment = (UnityEngine.Random.Range(0, 2) * 2 - 1) * wave.spawnerIncrement;
             yield return new WaitForSeconds(wave.startDelay);
             for (int i = 0; i < wave.objectsToSpawn.Length; i++)
             {
@@ -83,6 +84,8 @@ public class WaveSpawner : MonoBehaviour
                 for (int j = 0; j < obj.quantity; j++)
                 {
                     Transform spawner;
+                    currentCenterSpawner = Math.Min(currentCenterSpawner, centerSpawns.Length - 2);
+                    currentSpawner = Math.Min(currentSpawner, spawns.Length - 2);
                     if (obj.useCenterSpawns) spawner = centerSpawns[currentCenterSpawner];
                     else spawner = spawns[currentSpawner];
 
