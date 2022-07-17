@@ -23,6 +23,15 @@ public class Die : MonoBehaviour
         Pickup
     }
 
+    public enum DieType
+    {
+        Force,
+        Ice,
+        None
+    }
+
+    public DieType Type;
+
     [SerializeField]
     private DieState state = DieState.Idle;
     private bool InDrag
@@ -308,6 +317,10 @@ public class Die : MonoBehaviour
 
     public void MakeIdle()
     {
+        if (Pickup)
+        {
+            animator.SetBool("InPickup", false);
+        }
         rigidbody.isKinematic = false;
         rigidbody.useGravity = true;
         this.state = DieState.Idle;
