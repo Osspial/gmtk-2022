@@ -49,7 +49,8 @@ public class Die : MonoBehaviour
     private Vector3 dragOffset = Vector3.zero;
     public new Rigidbody rigidbody { get { return this.GetComponent<Rigidbody>();  } }
     public Animator animator { get { return this.GetComponent<Animator>(); } }
-    public Collider playerPickupTrigger;
+    public ListObjectsInTrigger playerMagnetTrigger;
+    public ListObjectsInTrigger playerPickupTrigger;
     public float releaseTorqueScale = 2.0f;
     public float maxGrabRaiseVelocity = 30.0f;
     private Vector3 lastAngularVelocity = Vector3.zero;
@@ -57,6 +58,8 @@ public class Die : MonoBehaviour
     private Vector3 velocityInDrag = Vector3.zero;
     public int dragSpeedSmoothingFrames = 3;
     private List<float> lastFewDragSpeeds = new List<float>();
+    public Transform pickupMagnetTowards = null;
+    public float pickupMagnetAcceleration = 10;
 
     private static Vector3 SIDE_6_VEC = new Vector3(0, 1, 0);
     private static Vector3 SIDE_2_VEC = new Vector3(-1, 0, 0);
@@ -120,7 +123,7 @@ public class Die : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-	source = GetComponent<AudioSource>();
+	    source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -189,6 +192,21 @@ public class Die : MonoBehaviour
             }
         }
         if (Pickup)
+        {
+            var player = playerMagnetTrigger.GetFirstMatchingCollider<Player>();
+            if (player != null)
+            {
+                pickupMagnetTowards = player.transform;
+                rigidbody.isKinematic = false;
+                rigidbody.useGravity = false;
+            }
+
+            if (pickupMagnetTowards)
+            {
+                var direction = (pickupMagnetTowards.position - transform.position).normalized;
+                rigidbody.AddForce(direction * pickupMagnetAcceleration / Time.deltaTime, ForceMode.Acceleration);
+            }
+        }
         
         lastAngularVelocity = rigidbody.angularVelocity;
         lastPhysicsPosition = transform.position;
