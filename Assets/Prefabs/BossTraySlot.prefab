@@ -141,8 +141,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 0.8805404, z: 5.114832}
-  m_Center: {x: 0, y: -4.5597296, z: -7.442584}
+  m_Size: {x: 10, y: 8.701241, z: 5.114832}
+  m_Center: {x: 0, y: -0.64937973, z: -7.442584}
 --- !u!114 &6431095630538961553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +158,9 @@ MonoBehaviour:
   DieBeingHeld: {fileID: 0}
   neededValue: 3
   Completed:
+    m_PersistentCalls:
+      m_Calls: []
+  returnDie:
     m_PersistentCalls:
       m_Calls: []
   text: {fileID: 3777990763026487468}

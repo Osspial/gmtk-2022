@@ -17,6 +17,10 @@ public class BossDiceTray : MonoBehaviour
     private UnityEvent Completed;
 
     [SerializeField]
+    private UnityEvent<Die> returnDie;
+
+
+    [SerializeField]
     private GameObject text;
 
     [SerializeField]
@@ -35,6 +39,9 @@ public class BossDiceTray : MonoBehaviour
     [SerializeField]
     TrayState CurrentState;
 
+    
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -105,7 +112,6 @@ public class BossDiceTray : MonoBehaviour
         text.GetComponent<TextMeshPro>().text = "";
         Completed.Invoke();
         CorrectTop.SetActive(true);
-        Destroy(DieBeingHeld.gameObject);
         DieBeingHeld = null;
     }
 
@@ -113,6 +119,7 @@ public class BossDiceTray : MonoBehaviour
     public void FinishFight()
     {
         CurrentState = TrayState.Inactive;
+        returnDie.Invoke(DieBeingHeld);
         CorrectTop.SetActive(false);
         InactiveTop.SetActive(true);
     }

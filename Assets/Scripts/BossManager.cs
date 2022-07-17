@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BossManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class BossManager : MonoBehaviour
 
     private bool activeBoss;
     private int remainingSlots;
+
+    [SerializeField]
+    private UnityEvent<Die> DieReturn;
 
     private void Awake()
     {
@@ -67,6 +71,12 @@ public class BossManager : MonoBehaviour
     public void CompletedTray()
     {
         remainingSlots--;
+    }
+
+    public void ReturnDie(Die die)
+    {
+        print("DIE " + die);
+        DieReturn.Invoke(die);
     }
 
 
