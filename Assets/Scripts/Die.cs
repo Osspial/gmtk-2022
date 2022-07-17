@@ -60,6 +60,7 @@ public class Die : MonoBehaviour
     private List<float> lastFewDragSpeeds = new List<float>();
     public Transform pickupMagnetTowards = null;
     public float pickupMagnetAcceleration = 10;
+    public GameObject disableWhileRolling;
 
     private static Vector3 SIDE_6_VEC = new Vector3(0, 1, 0);
     private static Vector3 SIDE_2_VEC = new Vector3(-1, 0, 0);
@@ -142,7 +143,13 @@ public class Die : MonoBehaviour
             // rigidbody.AddForce(targetVelocity - rigidbody.velocity, ForceMode.VelocityChange);
             // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
         }
+
+        // for some GODFORSAKEN reason having active triggers prevents the angular velocity from reaching
+        // zero, so we have an object to put triggers under that only gets enable when the die is activated.
+
+        disableWhileRolling.SetActive(!Rolling);
     }
+
     private void FixedUpdate()
     {
         if (InDrag)
@@ -161,7 +168,10 @@ public class Die : MonoBehaviour
             var lav = lastAngularVelocity;
             var rollingThisFrame = !(Mathf.Approximately(av.x, 0) && Mathf.Approximately(av.z, 0));
             var rollingLastFrame = !(Mathf.Approximately(lav.x, 0) && Mathf.Approximately(lav.z, 0));
+            //var rollingThisFrame = AngularVelocityIsRolling(av);
+            //var rollingLastFrame = AngularVelocityIsRolling(lav);
             // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
+            // TODO KEEP ANGULAR VELOCITY HISTORY
             if (rollingLastFrame && !rollingThisFrame)
             {
                 Debug.Log("Rolling stopped! In dice tray? " + inDiceTray);
@@ -205,6 +215,12 @@ public class Die : MonoBehaviour
             {
                 var direction = (pickupMagnetTowards.position - transform.position).normalized;
                 rigidbody.AddForce(direction * pickupMagnetAcceleration / Time.deltaTime, ForceMode.Acceleration);
+            }
+
+            var pickupPlayer = playerPickupTrigger.GetFirstMatchingCollider<Player>();
+            if (pickupPlayer != null)
+            {
+                FinishPickupState();
             }
         }
         
@@ -276,7 +292,14 @@ public class Die : MonoBehaviour
     public void FinishPickupState()
     {
         animator.SetBool("InPickup", false);
+        MakeIdle();
+        DiceTray.Instance.ThrowDieIntoTray(this);
+    }
+
+    public void MakeIdle()
+    {
         rigidbody.isKinematic = false;
+        rigidbody.useGravity = true;
         this.state = DieState.Idle;
     }
 }

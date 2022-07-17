@@ -7,6 +7,7 @@ public class ListObjectsInTrigger : MonoBehaviour
 {
     public new Collider rigidbody { get { return this.GetComponent<Collider>(); } }
     private List<Collider> colliders = new List<Collider>();
+    private HashSet<Collider> toRemove = new HashSet<Collider>();
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,15 +17,32 @@ public class ListObjectsInTrigger : MonoBehaviour
     {
         colliders.Remove(other);
     }
+
+    private void Update()
+    {
+        foreach( Collider r in toRemove )
+        {
+            colliders.Remove(r);
+        }
+        toRemove.Clear();
+    }
+
     public List<Collider> GetColliders()
     {
-        return new List<Collider>(colliders);
+        // doing this does the removal check
+        return GetMatchingColliders<Collider>();
     }
     public List<T> GetMatchingColliders<T>()
     {
         var list = new List<T>();
         foreach (var c in colliders)
         {
+            // checks if object is destroyed. c isn't ACTUALLY null here, but it compares truthily to null
+            if (c == null)
+            {
+                toRemove.Add(c);
+                continue;
+            }
             var t = c.GetComponent<T>();
             if (t != null) list.Add(t);
         }
