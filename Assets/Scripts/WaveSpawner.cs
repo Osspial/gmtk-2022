@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -48,6 +49,30 @@ public class WaveSpawner : MonoBehaviour
         while (currentWave < waves.Length)
         {
             var wave = waves[currentWave];
+            switch (wave.startCondition)
+            {
+                case WaveStartCondition.AllEnemiesKilled:
+                    var anyEnemyAlive = false;
+                    do
+                    {
+                        anyEnemyAlive = false;
+
+                        foreach (var enemy in activeEnemies)
+                        {
+                            if (enemy != null)
+                            {
+                                anyEnemyAlive = true;
+                            }
+                        }
+
+                        yield return null;
+                    } while (anyEnemyAlive);
+
+                    activeEnemies.Clear();
+                    break;
+                case WaveStartCondition.OnPreviousWaveStart:
+                    break;
+            }
             var currentSpawner = Random.Range(0, spawns.Length);
             var currentCenterSpawner = Random.Range(0, centerSpawns.Length);
             var increment = (Random.Range(0, 2) * 2 - 1) * wave.spawnerIncrement;
@@ -98,32 +123,30 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
 
-            switch (wave.startCondition)
-            {
-                case WaveStartCondition.AllEnemiesKilled:
-                    var anyEnemyAlive = false;
-                    do {
-                        anyEnemyAlive = false;
-
-                        foreach (var enemy in activeEnemies)
-                        {
-                            if (enemy != null)
-                            {
-                                anyEnemyAlive = true;
-                            }
-                        }
-                        
-                        yield return null;
-                    } while (anyEnemyAlive);
-
-                    activeEnemies.Clear();
-                    break;
-                case WaveStartCondition.OnPreviousWaveStart:
-                    break;
-            }
-
             currentWave += 1;
         }
+
+        {
+            var anyEnemyAlive2 = false;
+            do
+            {
+                anyEnemyAlive2 = false;
+
+                foreach (var enemy in activeEnemies)
+                {
+                    if (enemy != null)
+                    {
+                        anyEnemyAlive2 = true;
+                    }
+                }
+
+                yield return null;
+            } while (anyEnemyAlive2);
+        }
+
+
+        Debug.Log("All waves clear!");
+        SceneManager.LoadScene("Scenes/WinScene");
         yield return null;
     }
 }
