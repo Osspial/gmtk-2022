@@ -179,7 +179,7 @@ public class Die : MonoBehaviour
             // TODO KEEP ANGULAR VELOCITY HISTORY
             rollingTime += Time.deltaTime;
 
-            if ((rollingLastFrame && !rollingThisFrame) || rollingTime > 1)
+            if ((rollingLastFrame && !rollingThisFrame) || rollingTime > 3)
             {
                 Debug.Log("Rolling stopped! In dice tray? " + inDiceTray);
                 if (inDiceTray)
