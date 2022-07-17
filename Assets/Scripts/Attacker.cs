@@ -33,7 +33,6 @@ public class Attacker : MonoBehaviour
     private void OnTriggerStay(Collider collider)
     {
         var player = collider.GetComponent<Player>();
-        Debug.Log("Attack! " + player + delayUntilCanAttack);
         if (player == null) return;
         if (delayUntilCanAttack > 0) return;
 
