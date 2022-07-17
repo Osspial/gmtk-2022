@@ -64,11 +64,15 @@ public class BossManager : MonoBehaviour
     {
         CurrentBoss = boss;
         BossBase bossScript = boss.GetComponent("BossBase") as BossBase;
-        int diceNeeded = Random.Range(1, 6);
+        int diceNeeded = Random.Range(1, 5);
+        if(bossScript.Type == BossBase.bossType.TheKing)
+        {
+            diceNeeded = 6;
+        }
         print("diceNeeded = " + diceNeeded);
         for(int i = 0; i < diceNeeded; i++)
         {
-            int numNeeded = Random.Range(1, 6);
+            int numNeeded = Random.Range(1, 7);
 
 
             BossTray[i].Activate(numNeeded, bossScript.Type);
