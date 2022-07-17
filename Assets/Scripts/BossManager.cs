@@ -20,8 +20,16 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     private UnityEvent<Die> DieReturn;
 
+
+    public static BossManager Instance;
+
     private void Awake()
     {
+        if(Instance != this)
+        {
+            Debug.LogError("There are more than one BossManager in the current scene");
+        }
+        Instance = this;
         activeBoss = false;
         foreach (GameObject tray in BossDiceTrayGameObject)
         {
@@ -31,7 +39,7 @@ public class BossManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateBoss();
+        //GenerateBoss();
     }
 
     // Update is called once per frame
@@ -41,7 +49,7 @@ public class BossManager : MonoBehaviour
         {
            if(remainingSlots <= 0)
             {
-                print("You did it!");
+                //print("You did it!");
                 Destroy(CurrentBoss);
                 activeBoss = false;
                 foreach(BossDiceTray tray in BossTray)
@@ -52,8 +60,9 @@ public class BossManager : MonoBehaviour
         }
     }
 
-    private void GenerateBoss()
+    public void GenerateBoss(GameObject boss)
     {
+        CurrentBoss = boss;
         int diceNeeded = Random.Range(1, 6);
         print("diceNeeded = " + diceNeeded);
         for(int i = 0; i < diceNeeded; i++)

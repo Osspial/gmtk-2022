@@ -23,6 +23,14 @@ public class Die : MonoBehaviour
         Pickup
     }
 
+    public enum DieType
+    {
+        Force,
+        Ice
+    }
+
+    public DieType Type;
+
     [SerializeField]
     private DieState state = DieState.Idle;
     private bool InDrag
