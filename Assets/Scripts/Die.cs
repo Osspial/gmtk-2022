@@ -26,7 +26,8 @@ public class Die : MonoBehaviour
     public enum DieType
     {
         Force,
-        Ice
+        Ice,
+        None
     }
 
     public DieType Type;
