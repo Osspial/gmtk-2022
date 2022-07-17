@@ -46,7 +46,7 @@ public class BossManager : MonoBehaviour
                 activeBoss = false;
                 foreach(BossDiceTray tray in BossTray)
                 {
-                    tray.FinishFight();
+                    StartCoroutine(tray.FinishFight());
                 }
             }
         }

@@ -9,6 +9,7 @@ public class BossDiceTray : MonoBehaviour
 {
     [SerializeField]
     private Die DieBeingHeld;
+    private Die DieToReturn;
 
     [SerializeField]
     private int neededValue;
@@ -61,9 +62,10 @@ public class BossDiceTray : MonoBehaviour
                 int dieRollData = DieBeingHeld.SideUp;
                 if (DieBeingHeld.Active)
                 {
-                    if (neededValue != dieRollData)
+                    if ((neededValue != dieRollData) && (CurrentState != TrayState.Satisfied))
                     {
-                        Destroy(DieBeingHeld.gameObject);
+                        DieToReturn = DieBeingHeld;
+                        StartCoroutine(DelayReturnDie(DieToReturn));
                         DieBeingHeld = null;
                     }
                     else
@@ -78,7 +80,7 @@ public class BossDiceTray : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var die = other.GetComponent<Die>();
-        if (die == null) return;
+        if ((die == null) && (CurrentState != TrayState.Satisfied)) return;
 
         DieBeingHeld = die;
 
@@ -89,7 +91,7 @@ public class BossDiceTray : MonoBehaviour
         var die = other.GetComponent<Die>();
         if (die == null) return;
 
-        if(die == DieBeingHeld)
+        if((die == DieBeingHeld) && (CurrentState != TrayState.Satisfied))
         {
             DieBeingHeld = null;
         }
@@ -108,25 +110,43 @@ public class BossDiceTray : MonoBehaviour
     //Called when this tray recieves the correct die changing state to satisfied
     private void CorrectDie()
     {
+        print("CORRECT: " + DieBeingHeld);
         CurrentState = TrayState.Satisfied;
         text.GetComponent<TextMeshPro>().text = "";
         Completed.Invoke();
         CorrectTop.SetActive(true);
+        DieToReturn = DieBeingHeld;
+        print("POSTCORRECT: " + DieBeingHeld);
         DieBeingHeld = null;
     }
 
     //changes the state to inactive, called once a boss fight is done
-    public void FinishFight()
+    public IEnumerator FinishFight()
     {
-        CurrentState = TrayState.Inactive;
-        returnDie.Invoke(DieBeingHeld);
-        CorrectTop.SetActive(false);
-        InactiveTop.SetActive(true);
+        if (CurrentState != TrayState.Inactive)
+        {
+            CurrentState = TrayState.Inactive;
+            //print("DIE " + DieToReturn);
+            
+            
+            CorrectTop.SetActive(false);
+            InactiveTop.SetActive(true);
+
+            yield return new WaitForSeconds(1);
+            DiceTray.Instance.ThrowDieIntoTray(DieToReturn);
+
+        }
     }
 
     private void setValue(int val)
     {
         neededValue = val;
+    }
+
+    private IEnumerator DelayReturnDie(Die die)
+    {
+        yield return new WaitForSeconds(1);
+        DiceTray.Instance.ThrowDieIntoTray(die);
     }
 
 }

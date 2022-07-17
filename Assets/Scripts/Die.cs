@@ -298,6 +298,10 @@ public class Die : MonoBehaviour
 
     public void MakeIdle()
     {
+        if (Pickup)
+        {
+            animator.SetBool("InPickup", false);
+        }
         rigidbody.isKinematic = false;
         rigidbody.useGravity = true;
         this.state = DieState.Idle;
