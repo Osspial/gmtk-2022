@@ -35,5 +35,6 @@ public class FreezeDie : MonoBehaviour
             m.moveSpeed = m.moveSpeed + 2;
             Debug.Log("Second Speed: "+m.moveSpeed);
         }
+        marks.Clear();
     }
 }

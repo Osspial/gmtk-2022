@@ -1121,7 +1121,7 @@ PrefabInstance:
     - target: {fileID: 5480580178706455403, guid: 19810b5b597ef594298014f413a320a1, type: 3}
       propertyPath: dieTemplate
       value: 
-      objectReference: {fileID: 4182614200728717854, guid: 1aa8c7f42818a9b43aa8c7e2e8478fde, type: 3}
+      objectReference: {fileID: 596469364004999918, guid: 28414d6e69d6b9443a905819f5dc2ed7, type: 3}
     - target: {fileID: 8100601082539884067, guid: 19810b5b597ef594298014f413a320a1, type: 3}
       propertyPath: m_RootOrder
       value: 6

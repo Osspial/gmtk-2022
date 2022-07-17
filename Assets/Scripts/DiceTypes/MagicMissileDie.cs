@@ -21,5 +21,6 @@ public class MagicMissileDie : MonoBehaviour
         {
             m.TakeDamage(damage, Damageable.DamageType.Force);
         }
+        marks.Clear();
     }
 }
