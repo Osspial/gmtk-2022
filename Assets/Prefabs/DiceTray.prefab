@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dieSpawnPoint: {fileID: 156576223201283429}
-  dieTemplate: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+  dieTemplate: {fileID: 8854553252309892272, guid: 71e5c22a686a4cb4b97d2f8e94970656, type: 3}
   spawnMinSpeed: 20
   spawnMaxSpeed: 70
   spawnAngleRange: 20
