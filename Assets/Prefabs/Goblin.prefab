@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2140576876049006521}
   - component: {fileID: 1837294857335661854}
   - component: {fileID: 7484961731872362072}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 1194043284}
   - component: {fileID: 1194043282}
   - component: {fileID: 4002629380543808395}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ CapsuleCollider:
   m_Radius: 0.52
   m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 2.2, z: 0.52}
+  m_Center: {x: 0, y: 1.95, z: 0.52}
 --- !u!114 &1194043282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
+  maxHealth: 10
   forceDamageMultiplier: 1
   iceDamageMultiplier: 1
   fireDamageMultiplier: 1
@@ -294,7 +295,7 @@ GameObject:
   - component: {fileID: 8752321495180761958}
   - component: {fileID: 3083724192834749930}
   - component: {fileID: 6291869361914056739}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Attacker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,6 +405,14 @@ PrefabInstance:
     - target: {fileID: 5353304624919448288, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
       propertyPath: m_Name
       value: SpritePivot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353304624919448288, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616703006005054285, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8616703006005054286, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
       propertyPath: m_LocalScale.y

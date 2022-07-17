@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         var delta = movement * movespeed * Time.fixedDeltaTime;
-        if (statusEffectTrigger.GetFirstMatchingCollider<PlayerSlowTrigger>() != null)
+        if (statusEffectTrigger.GetFirstMatchingCollider<SlowTrigger>() != null)
         {
             delta *= slowSpeedMultiplier;
         }

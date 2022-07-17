@@ -151,12 +151,16 @@ public class Die : MonoBehaviour
         disableWhileRolling.SetActive(!Rolling);
     }
 
+    public float rollingTime = 0;
+
     private void FixedUpdate()
     {
         if (InDrag)
         {
             Assert.IsTrue(rigidbody.isKinematic);
+            Debug.Log($"{transform.position} - {lastPhysicsPosition} = {(transform.position - lastPhysicsPosition)}");
             velocityInDrag = (transform.position - lastPhysicsPosition) / Time.deltaTime;
+            lastPhysicsPosition = transform.position;
             lastFewDragSpeeds.Add(velocityInDrag.magnitude);
             if (lastFewDragSpeeds.Count > dragSpeedSmoothingFrames)
             {
@@ -173,7 +177,9 @@ public class Die : MonoBehaviour
             //var rollingLastFrame = AngularVelocityIsRolling(lav);
             // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
             // TODO KEEP ANGULAR VELOCITY HISTORY
-            if (rollingLastFrame && !rollingThisFrame)
+            rollingTime += Time.deltaTime;
+
+            if ((rollingLastFrame && !rollingThisFrame) || rollingTime > 1)
             {
                 Debug.Log("Rolling stopped! In dice tray? " + inDiceTray);
                 if (inDiceTray)
@@ -226,7 +232,6 @@ public class Die : MonoBehaviour
         }
         
         lastAngularVelocity = rigidbody.angularVelocity;
-        lastPhysicsPosition = transform.position;
     }
 
     public bool StartDrag(RaycastHit grab)
@@ -247,10 +252,12 @@ public class Die : MonoBehaviour
         rigidbody.useGravity = true;
         rigidbody.freezeRotation = false;
         rigidbody.isKinematic = false;
+        rollingTime = 0;
 
         Assert.IsTrue(lastFewDragSpeeds.Count <= dragSpeedSmoothingFrames);
         var magnitude = (float) lastFewDragSpeeds.Average();
         rigidbody.velocity = velocityInDrag.normalized * magnitude;
+        Debug.Log($"magnitude {magnitude} velocity {velocityInDrag.normalized}");
         lastFewDragSpeeds.Clear();
         source.Play();
 
