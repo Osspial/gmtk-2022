@@ -12,10 +12,10 @@ TagManager:
   - Water
   - UI
   - Dice
-  - 
-  - 
-  - 
-  - 
+  - PlayerHit
+  - EnemyHit
+  - Player
+  - Enemy
   - 
   - 
   - 

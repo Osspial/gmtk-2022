@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 288294669922924431}
   - component: {fileID: 3310423342300529611}
   - component: {fileID: 5317667109285911155}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FreezeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 1194043283}
   - component: {fileID: 1194043284}
   - component: {fileID: 1194043282}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IceElemental
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 2135825558220207279}
   - component: {fileID: 5558063429680481490}
   - component: {fileID: 4599854842336471603}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,6 +318,14 @@ PrefabInstance:
     - target: {fileID: 5353304624919448288, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
       propertyPath: m_Name
       value: SpritePivot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353304624919448288, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616703006005054285, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8616703006005054286, guid: 06d5ec814b95ba04ca2cf241dd583f3f, type: 3}
       propertyPath: m_LocalScale.y
