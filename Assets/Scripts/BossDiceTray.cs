@@ -192,11 +192,11 @@ public class BossDiceTray : MonoBehaviour
             text.GetComponent<TextMeshPro>().color = new Color32(169, 0, 220, 255);
         } else if(requiredType == Die.DieType.Ice)
         {
-            text.GetComponent<TextMeshPro>().color = new Color32(137, 252, 255, 255);
+            text.GetComponent<TextMeshPro>().color = new Color32(43, 168, 172, 255);
         } else if(requiredType == Die.DieType.None)
         {
             //text.GetComponent<TextMeshPro>().colorGradientPreset = anyDie;
-            text.GetComponent<TextMeshPro>().color = new Color32(255, 255, 255, 255);
+            text.GetComponent<TextMeshPro>().color = new Color32(0, 0, 0, 255);
         }
     }
 
