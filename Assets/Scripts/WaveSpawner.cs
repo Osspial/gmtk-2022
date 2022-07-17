@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaveSpawner : MonoBehaviour
 {
     public Transform[] spawns;
+    public Transform[] centerSpawns;
     public Wave[] waves;
     public int currentWave = 0;
     public List<EnemyMovement> activeEnemies = new List<EnemyMovement>();
@@ -31,6 +32,7 @@ public class WaveSpawner : MonoBehaviour
     public class ObjectSpawn
     {
         public GameObject spawnObject;
+        public bool useCenterSpawns = false;
         public int quantity = 1;
     }
 
@@ -47,6 +49,7 @@ public class WaveSpawner : MonoBehaviour
         {
             var wave = waves[currentWave];
             var currentSpawner = Random.Range(0, spawns.Length);
+            var currentCenterSpawner = Random.Range(0, centerSpawns.Length);
             var increment = (Random.Range(0, 2) * 2 - 1) * wave.spawnerIncrement;
             yield return new WaitForSeconds(wave.startDelay);
             for (int i = 0; i < wave.objectsToSpawn.Length; i++)
@@ -54,7 +57,10 @@ public class WaveSpawner : MonoBehaviour
                 var obj = wave.objectsToSpawn[i];
                 for (int j = 0; j < obj.quantity; j++)
                 {
-                    var spawner = spawns[currentSpawner];
+                    Transform spawner;
+                    if (obj.useCenterSpawns) spawner = centerSpawns[currentCenterSpawner];
+                    else spawner = spawns[currentSpawner];
+
                     var spawnedObject = Instantiate(obj.spawnObject, spawner.transform.position, Quaternion.Euler(0, 0, 0));
                     var enemy = spawnedObject.GetComponent<EnemyMovement>();
                     if (enemy != null && wave.addEnemiesToEnemyPool)
@@ -65,13 +71,29 @@ public class WaveSpawner : MonoBehaviour
                     {
                         yield return new WaitForSeconds(wave.delayBetweenObjectSpawns);
                     }
+                    var die = spawnedObject.GetComponent<Die>();
+                    if (die != null) die.MakePickup(2);
                     currentSpawner += increment;
-                    if (currentSpawner < 0)
+                    if (obj.useCenterSpawns)
                     {
-                        currentSpawner = spawns.Length - 1;
-                    } else if (currentSpawner >= spawns.Length)
+                        if (currentCenterSpawner < 0)
+                        {
+                            currentCenterSpawner = centerSpawns.Length - 1;
+                        }
+                        else if (currentCenterSpawner >= centerSpawns.Length)
+                        {
+                            currentCenterSpawner = 0;
+                        }
+                    } else
                     {
-                        currentSpawner = 0;
+                        if (currentSpawner < 0)
+                        {
+                            currentSpawner = spawns.Length - 1;
+                        }
+                        else if (currentSpawner >= spawns.Length)
+                        {
+                            currentSpawner = 0;
+                        }
                     }
                 }
             }
