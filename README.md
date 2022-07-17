@@ -4,7 +4,7 @@ Game made for GMTK game jam 2022 by:
 - Osspial
 - pm-coding
 - Orichalium
-- Gamers
+- Ruffboy2
 - Warmersnow
   
  [Ribeye Font by Astigmatic One Eye Typographic Institute.](https://www.1001fonts.com/ribeye-font.html)
