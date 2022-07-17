@@ -23,18 +23,20 @@ public class FreezeDie : MonoBehaviour
     }
 	public IEnumerator FreezeEnemy() 
 	{
-		foreach (var m in marks)
+        var marksCopy = new HashSet<EnemyMovement>(marks);
+        marks.Clear();
+		foreach (var m in marksCopy)
         {
             Debug.Log("First Speed: " + m.moveSpeed);
             m.moveSpeed = m.moveSpeed - 2;
 			Debug.Log("Speed Frozen" +m.moveSpeed);
         }
 		yield return new WaitForSeconds(freeze);
-		foreach (var m in marks)
+		foreach (var m in marksCopy)
         {
             m.moveSpeed = m.moveSpeed + 2;
             Debug.Log("Second Speed: "+m.moveSpeed);
         }
-        marks.Clear();
+        marksCopy.Clear();
     }
 }
