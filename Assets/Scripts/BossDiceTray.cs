@@ -77,6 +77,12 @@ public class BossDiceTray : MonoBehaviour
                     {
                         CorrectDie();
                     }
+                    else
+                    {
+                        DieToReturn = DieBeingHeld;
+                        StartCoroutine(DelayReturnDie(DieToReturn));
+                        DieBeingHeld = null;
+                    }
                 }
             }
         }
@@ -183,14 +189,14 @@ public class BossDiceTray : MonoBehaviour
     {
         if(requiredType == Die.DieType.Force)
         {
-            text.GetComponent<TextMeshPro>().color = new Color(169f, 0f, 220f, 255f);
+            text.GetComponent<TextMeshPro>().color = new Color32(169, 0, 220, 255);
         } else if(requiredType == Die.DieType.Ice)
         {
-            text.GetComponent<TextMeshPro>().color = new Color(137f, 252f, 255f, 255f);
+            text.GetComponent<TextMeshPro>().color = new Color32(137, 252, 255, 255);
         } else if(requiredType == Die.DieType.None)
         {
             //text.GetComponent<TextMeshPro>().colorGradientPreset = anyDie;
-            text.GetComponent<TextMeshPro>().color = new Color(255f, 255f, 255f, 255f);
+            text.GetComponent<TextMeshPro>().color = new Color32(255, 255, 255, 255);
         }
     }
 
