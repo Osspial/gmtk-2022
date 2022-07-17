@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4634284387524554365}
   - component: {fileID: 4634284387524554366}
   - component: {fileID: 4634284387524554364}
+  - component: {fileID: 981986866}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -79,7 +80,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movespeed: 5
   rb: {fileID: 4634284387524554365}
-  calcscore: {fileID: 0}
+  calcscore: {fileID: 11400000, guid: 67a6e8a53b4d6a341b2d357c9b30389d, type: 2}
+--- !u!114 &981986866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4634284387524554306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d537505fd638e4e925d8734ef82821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  forceDamageMultiplier: 1
+  iceDamageMultiplier: 1
+  fireDamageMultiplier: 1
+  damageTextPrototype: {fileID: 2898882426294038781, guid: 499236f5ec1dcdf44807fdea0863233f, type: 3}
+  onKilled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4018588159866713107
 PrefabInstance:
   m_ObjectHideFlags: 0
