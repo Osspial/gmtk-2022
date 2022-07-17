@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider))]
 public class Damageable : MonoBehaviour
@@ -10,17 +11,30 @@ public class Damageable : MonoBehaviour
     private bool dying = false;
 
     public float forceDamageMultiplier = 1.0f;
+    public float iceDamageMultiplier = 1.0f;
+    public float fireDamageMultiplier = 1.0f;
 
     public DamageText damageTextPrototype;
+    public Slider healthSlider;
 
     public enum DamageType
     {
         // look at the 5e damage types if you want inspiration
         // https://5e.tools/tables.html#damage%20types_phb
         Force,
+        Ice,
+        Fire,
     }
 
     public UnityEvent onKilled;
+
+    public void Update()
+    {
+        if (healthSlider != null)
+        {
+            healthSlider.value = health;
+        }
+    }
 
     public void TakeDamage(float damage, DamageType type)
     {

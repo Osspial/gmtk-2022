@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FreezeDie
       objectReference: {fileID: 0}
+    - target: {fileID: 2917736036761663065, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 492040b8522d4e64198f6029da6811f4, type: 2}
     - target: {fileID: 4962622258084998820, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
       propertyPath: m_RootOrder
       value: 0
