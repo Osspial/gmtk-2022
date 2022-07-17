@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444367519884be74c9d5e61d119dcfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 4
 --- !u!54 &1194043283
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAnimator: {fileID: 4002629380543808395}
-  damage: 0.2
+  damage: 0.5
   damageType: 0
   attackRate: 1
   delayUntilCanAttack: 0
