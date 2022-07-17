@@ -9,7 +9,6 @@ public class DiceTray : MonoBehaviour
 {
     public static DiceTray Instance { get; private set; }
     public GameObject dieSpawnPoint;
-    public Die dieTemplate;
     public float spawnMinSpeed = 10;
     public float spawnMaxSpeed = 30;
     public float spawnAngleRange = 30;
@@ -25,14 +24,6 @@ public class DiceTray : MonoBehaviour
         }
 
         Assert.IsNotNull(dieSpawnPoint);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnDie(dieTemplate);
-        }
     }
 
     private void OnTriggerEnter(Collider gameObject)
