@@ -7,9 +7,7 @@ public class FireDieScript : MonoBehaviour
 {
 
     public GameObject fzone;
-    public Transform position;
 
-    private bool spawned = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +23,13 @@ public class FireDieScript : MonoBehaviour
 
     public void rollEvent(Die.DieRollData rollData)
     {
-        if (!spawned)
-        {
-            var zone = Instantiate(fzone, position.position, Quaternion.Euler(0, 0, 0));
-            zone.GetComponent<FireZone>().seconds = rollData.side;
-            spawned = true;
-        }
+        StartCoroutine(FUckUnityCoroutine(rollData));
+    }
+
+    IEnumerator FUckUnityCoroutine(Die.DieRollData rollData)
+    {
+        yield return null;
+        var zone = Instantiate(fzone, transform.position, Quaternion.Euler(90, 0, 0));
+        zone.GetComponent<FireZone>().seconds = rollData.side;
     }
 }
