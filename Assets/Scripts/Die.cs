@@ -285,6 +285,7 @@ public class Die : MonoBehaviour
     private IEnumerator MakePickupDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+        pickupMagnetTowards = null;
         animator.SetBool("InPickup", true);
         rigidbody.isKinematic = true;
         this.state = DieState.Pickup;
@@ -293,6 +294,7 @@ public class Die : MonoBehaviour
     public void FinishPickupState()
     {
         animator.SetBool("InPickup", false);
+        pickupMagnetTowards = null;
         MakeIdle();
         DiceTray.Instance.ThrowDieIntoTray(this);
     }

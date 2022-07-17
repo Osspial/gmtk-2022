@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Damageable))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }

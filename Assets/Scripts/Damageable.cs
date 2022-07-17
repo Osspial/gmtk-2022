@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider))]
 public class Damageable : MonoBehaviour
@@ -14,6 +15,7 @@ public class Damageable : MonoBehaviour
     public float fireDamageMultiplier = 1.0f;
 
     public DamageText damageTextPrototype;
+    public Slider healthSlider;
 
     public enum DamageType
     {
@@ -25,6 +27,14 @@ public class Damageable : MonoBehaviour
     }
 
     public UnityEvent onKilled;
+
+    public void Update()
+    {
+        if (healthSlider != null)
+        {
+            healthSlider.value = health;
+        }
+    }
 
     public void TakeDamage(float damage, DamageType type)
     {
