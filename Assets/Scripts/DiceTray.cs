@@ -52,6 +52,15 @@ public class DiceTray : MonoBehaviour
     public void SpawnDie(Die template)
     {
         var die = Instantiate(template, dieSpawnPoint.transform.position, UnityEngine.Random.rotation);
+        ThrowDieIntoTray(die);
+    }
+
+    public void ThrowDieIntoTray(Die die)
+    {
+        die.MakeIdle();
+        die.rigidbody.velocity = Vector3.zero;
+        die.rigidbody.angularVelocity = Vector3.zero;
+        die.transform.position = dieSpawnPoint.transform.position;
         var spawnSpeed = UnityEngine.Random.Range(spawnMinSpeed, spawnMaxSpeed);
         var spawnAngle = UnityEngine.Random.Range(-spawnAngleRange / 2, spawnAngleRange / 2);
         var velocityVector = Quaternion.Euler(0, spawnAngle, 0) * Vector3.forward * spawnSpeed;
