@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,12 +7,11 @@ using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class Die : MonoBehaviour
 {
     public const int DIE_LAYER = 1 << 6;
 	private AudioSource source;
-
 
     [Serializable]
     private enum DieState
@@ -19,7 +19,8 @@ public class Die : MonoBehaviour
         Idle,
         InDrag,
         Rolling,
-        Activated
+        Activated,
+        Pickup
     }
 
     [SerializeField]
@@ -37,12 +38,19 @@ public class Die : MonoBehaviour
     {
         get { return state == DieState.Activated; }
     }
+    public bool Pickup
+    {
+        get { return state == DieState.Pickup; }
+    }
 
     private bool inDiceTray = false;
 
     private Vector3 dragDestination = Vector3.zero;
     private Vector3 dragOffset = Vector3.zero;
     public new Rigidbody rigidbody { get { return this.GetComponent<Rigidbody>();  } }
+    public Animator animator { get { return this.GetComponent<Animator>(); } }
+    public ListObjectsInTrigger playerMagnetTrigger;
+    public ListObjectsInTrigger playerPickupTrigger;
     public float releaseTorqueScale = 2.0f;
     public float maxGrabRaiseVelocity = 30.0f;
     private Vector3 lastAngularVelocity = Vector3.zero;
@@ -50,6 +58,9 @@ public class Die : MonoBehaviour
     private Vector3 velocityInDrag = Vector3.zero;
     public int dragSpeedSmoothingFrames = 3;
     private List<float> lastFewDragSpeeds = new List<float>();
+    public Transform pickupMagnetTowards = null;
+    public float pickupMagnetAcceleration = 10;
+    public GameObject disableWhileRolling;
 
     private static Vector3 SIDE_6_VEC = new Vector3(0, 1, 0);
     private static Vector3 SIDE_2_VEC = new Vector3(-1, 0, 0);
@@ -113,7 +124,7 @@ public class Die : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-	source = GetComponent<AudioSource>();
+	    source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -132,7 +143,13 @@ public class Die : MonoBehaviour
             // rigidbody.AddForce(targetVelocity - rigidbody.velocity, ForceMode.VelocityChange);
             // rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);
         }
+
+        // for some GODFORSAKEN reason having active triggers prevents the angular velocity from reaching
+        // zero, so we have an object to put triggers under that only gets enable when the die is activated.
+
+        disableWhileRolling.SetActive(!Rolling);
     }
+
     private void FixedUpdate()
     {
         if (InDrag)
@@ -151,7 +168,10 @@ public class Die : MonoBehaviour
             var lav = lastAngularVelocity;
             var rollingThisFrame = !(Mathf.Approximately(av.x, 0) && Mathf.Approximately(av.z, 0));
             var rollingLastFrame = !(Mathf.Approximately(lav.x, 0) && Mathf.Approximately(lav.z, 0));
+            //var rollingThisFrame = AngularVelocityIsRolling(av);
+            //var rollingLastFrame = AngularVelocityIsRolling(lav);
             // Debug.Log("rtf " + rollingThisFrame + " rlf " + rollingLastFrame);
+            // TODO KEEP ANGULAR VELOCITY HISTORY
             if (rollingLastFrame && !rollingThisFrame)
             {
                 Debug.Log("Rolling stopped! In dice tray? " + inDiceTray);
@@ -179,6 +199,28 @@ public class Die : MonoBehaviour
                     }
                     this.state = DieState.Activated;
                 }
+            }
+        }
+        if (Pickup)
+        {
+            var player = playerMagnetTrigger.GetFirstMatchingCollider<Player>();
+            if (player != null)
+            {
+                pickupMagnetTowards = player.transform;
+                rigidbody.isKinematic = false;
+                rigidbody.useGravity = false;
+            }
+
+            if (pickupMagnetTowards)
+            {
+                var direction = (pickupMagnetTowards.position - transform.position).normalized;
+                rigidbody.AddForce(direction * pickupMagnetAcceleration / Time.deltaTime, ForceMode.Acceleration);
+            }
+
+            var pickupPlayer = playerPickupTrigger.GetFirstMatchingCollider<Player>();
+            if (pickupPlayer != null)
+            {
+                FinishPickupState();
             }
         }
         
@@ -209,6 +251,7 @@ public class Die : MonoBehaviour
         var magnitude = (float) lastFewDragSpeeds.Average();
         rigidbody.velocity = velocityInDrag.normalized * magnitude;
         lastFewDragSpeeds.Clear();
+        source.Play();
 
         var torqueScale = UnityEngine.Random.Range(0.5f, 1.0f);
         var torque = new Vector3(rigidbody.velocity.z, 0, -rigidbody.velocity.x);
@@ -230,10 +273,33 @@ public class Die : MonoBehaviour
 
     public void ExitDiceTray()
     {
-		source.Play();
         this.inDiceTray = false;
     }
 
-   
+    public void MakePickup(float delay)
+    {
+        StartCoroutine(MakePickupDelay(delay));
+    }
 
+    private IEnumerator MakePickupDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.SetBool("InPickup", true);
+        rigidbody.isKinematic = true;
+        this.state = DieState.Pickup;
+    }
+
+    public void FinishPickupState()
+    {
+        animator.SetBool("InPickup", false);
+        MakeIdle();
+        DiceTray.Instance.ThrowDieIntoTray(this);
+    }
+
+    public void MakeIdle()
+    {
+        rigidbody.isKinematic = false;
+        rigidbody.useGravity = true;
+        this.state = DieState.Idle;
+    }
 }
