@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Damageable : MonoBehaviour
 {
     public float health = 10;
+    public float maxHealth = 10;
     private bool dying = false;
 
     public float forceDamageMultiplier = 1.0f;
@@ -16,6 +17,11 @@ public class Damageable : MonoBehaviour
 
     public DamageText damageTextPrototype;
     public Slider healthSlider;
+
+    public bool AtMaxHealth
+    {
+        get { return health == maxHealth; }
+    }
 
     public enum DamageType
     {
@@ -34,6 +40,12 @@ public class Damageable : MonoBehaviour
         {
             healthSlider.value = health;
         }
+    }
+
+    public void Heal(float healAmount)
+    {
+        health += healAmount;
+        health = Mathf.Min(health, maxHealth);
     }
 
     public void TakeDamage(float damage, DamageType type)
