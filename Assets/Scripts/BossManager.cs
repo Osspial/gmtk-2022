@@ -27,7 +27,7 @@ public class BossManager : MonoBehaviour
     {
         if(Instance != this)
         {
-            Debug.LogError("There are more than one BossManager in the current scene");
+            //Debug.LogError("There are more than one BossManager in the current scene");
         }
         Instance = this;
         activeBoss = false;
@@ -63,16 +63,19 @@ public class BossManager : MonoBehaviour
     public void GenerateBoss(GameObject boss)
     {
         CurrentBoss = boss;
+        BossBase bossScript = boss.GetComponent("BossBase") as BossBase;
         int diceNeeded = Random.Range(1, 6);
         print("diceNeeded = " + diceNeeded);
         for(int i = 0; i < diceNeeded; i++)
         {
             int numNeeded = Random.Range(1, 6);
-            BossTray[i].Activate(numNeeded);
+
+
+            BossTray[i].Activate(numNeeded, bossScript.Type);
             print("Tray " + i + " needs die Value of " + numNeeded);
         }
-        CurrentBoss = Resources.Load("Big Boss") as GameObject;
-        CurrentBoss = Instantiate(CurrentBoss);
+        //CurrentBoss = Resources.Load("Big Boss") as GameObject;
+        //CurrentBoss = Instantiate(CurrentBoss);
         remainingSlots = diceNeeded;
         activeBoss = true;
     }

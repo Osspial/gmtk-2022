@@ -30,12 +30,17 @@ public class BossDiceTray : MonoBehaviour
     [SerializeField]
     private GameObject InactiveTop;
 
+    [SerializeField]
+    private TMP_ColorGradient anyDie;
+
     private enum TrayState
     {
         Inactive,
         Empty,
         Satisfied
     }
+
+    private Die.DieType requiredType;
 
     [SerializeField]
     TrayState CurrentState;
@@ -68,7 +73,7 @@ public class BossDiceTray : MonoBehaviour
                         StartCoroutine(DelayReturnDie(DieToReturn));
                         DieBeingHeld = null;
                     }
-                    else
+                    else if(requiredType == DieBeingHeld.Type || requiredType == Die.DieType.None)
                     {
                         CorrectDie();
                     }
@@ -99,24 +104,49 @@ public class BossDiceTray : MonoBehaviour
     }
     
     //called when this tray is activated, needs the value to be set to what die is required
-    public void Activate(int val)
+    public void Activate(int val, BossBase.bossType required)
     {
         setValue(val);
         CurrentState = TrayState.Empty;
         text.GetComponent<TextMeshPro>().text = val.ToString();
+
+        switch (required){
+            case BossBase.bossType.Goblin:
+                requiredType = Die.DieType.None;
+                break;
+            case BossBase.bossType.Fire:
+                requiredType = Die.DieType.Ice;
+                break;
+            case BossBase.bossType.Ice:
+                requiredType = Die.DieType.None;
+                break;
+            case BossBase.bossType.TheKing:
+                int random = Random.Range(1, 3);
+                if(random == 1)
+                {
+                    requiredType = Die.DieType.Force;
+                }
+                else
+                {
+                    requiredType = Die.DieType.Ice;
+                }
+                break;
+
+        }
+
+
         InactiveTop.SetActive(false);
+        SetNumberColor();
     }
 
     //Called when this tray recieves the correct die changing state to satisfied
     private void CorrectDie()
     {
-        print("CORRECT: " + DieBeingHeld);
         CurrentState = TrayState.Satisfied;
         text.GetComponent<TextMeshPro>().text = "";
         Completed.Invoke();
         CorrectTop.SetActive(true);
         DieToReturn = DieBeingHeld;
-        print("POSTCORRECT: " + DieBeingHeld);
         DieBeingHeld = null;
     }
 
@@ -147,6 +177,21 @@ public class BossDiceTray : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         DiceTray.Instance.ThrowDieIntoTray(die);
+    }
+
+    private void SetNumberColor()
+    {
+        if(requiredType == Die.DieType.Force)
+        {
+            text.GetComponent<TextMeshPro>().color = new Color(169f, 0f, 220f, 255f);
+        } else if(requiredType == Die.DieType.Ice)
+        {
+            text.GetComponent<TextMeshPro>().color = new Color(137f, 252f, 255f, 255f);
+        } else if(requiredType == Die.DieType.None)
+        {
+            //text.GetComponent<TextMeshPro>().colorGradientPreset = anyDie;
+            text.GetComponent<TextMeshPro>().color = new Color(255f, 255f, 255f, 255f);
+        }
     }
 
 }
