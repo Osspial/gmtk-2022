@@ -13,17 +13,9 @@ public class FireZone : MonoBehaviour
 
     public int seconds;
 
-    public TimeSCriptableObject time;
-
     void Start()
     {
-        StartCoroutine(timer());
-    }
-
-    public IEnumerator timer()
-    {
-        yield return new WaitForSeconds(time.seconds);
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, seconds);
     }
 
     private void FixedUpdate()

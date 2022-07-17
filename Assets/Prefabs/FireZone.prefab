@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 328084105657962713}
   - component: {fileID: 4396727374458251794}
   - component: {fileID: 4573402363031141758}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: FireTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

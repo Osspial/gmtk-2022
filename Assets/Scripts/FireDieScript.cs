@@ -8,8 +8,8 @@ public class FireDieScript : MonoBehaviour
 
     public GameObject fzone;
     public Transform position;
-    public TimeSCriptableObject time;
 
+    private bool spawned = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,11 @@ public class FireDieScript : MonoBehaviour
 
     public void rollEvent(Die.DieRollData rollData)
     {
-        time.seconds = rollData.side;
-        Instantiate(fzone, position);
+        if (!spawned)
+        {
+            var zone = Instantiate(fzone, position.position, Quaternion.Euler(0, 0, 0));
+            zone.GetComponent<FireZone>().seconds = rollData.side;
+            spawned = true;
+        }
     }
 }
