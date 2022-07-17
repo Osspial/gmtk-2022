@@ -27,6 +27,7 @@ public class Die : MonoBehaviour
     {
         Force,
         Ice,
+        Fire,
         None
     }
 

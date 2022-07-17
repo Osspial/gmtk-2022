@@ -124,17 +124,21 @@ public class BossDiceTray : MonoBehaviour
                 requiredType = Die.DieType.Ice;
                 break;
             case BossBase.bossType.Ice:
-                requiredType = Die.DieType.None;
+                requiredType = Die.DieType.Fire;
                 break;
             case BossBase.bossType.TheKing:
-                int random = Random.Range(1, 3);
+                int random = Random.Range(1, 4);
                 if(random == 1)
                 {
                     requiredType = Die.DieType.Force;
                 }
-                else
+                else if(random == 2)
                 {
                     requiredType = Die.DieType.Ice;
+                }
+                else
+                {
+                    requiredType = Die.DieType.Fire;
                 }
                 break;
 
@@ -197,6 +201,10 @@ public class BossDiceTray : MonoBehaviour
         {
             //text.GetComponent<TextMeshPro>().colorGradientPreset = anyDie;
             text.GetComponent<TextMeshPro>().color = new Color32(0, 0, 0, 255);
+        } else if (requiredType == Die.DieType.Fire)
+        {
+            //text.GetComponent<TextMeshPro>().colorGradientPreset = anyDie;
+            text.GetComponent<TextMeshPro>().color = new Color32(172, 43, 43, 255);
         }
     }
 

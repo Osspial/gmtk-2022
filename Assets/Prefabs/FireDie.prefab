@@ -60,6 +60,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
+      propertyPath: Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935698975895543938, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
       propertyPath: anyRollEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -107,9 +111,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fzone: {fileID: 8645281556984842537, guid: 26871623801a1a446abc88e5ac66ff0c, type: 3}
-  position: {fileID: 4737137381683690460}
---- !u!4 &4737137381683690460 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4962622258084998820, guid: a2058268c84f70f438e5c1434ba1afb6, type: 3}
-  m_PrefabInstance: {fileID: 388285930670167416}
-  m_PrefabAsset: {fileID: 0}
