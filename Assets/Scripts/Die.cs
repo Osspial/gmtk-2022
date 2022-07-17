@@ -125,6 +125,7 @@ public class Die : MonoBehaviour
     void Start()
     { 
 	    source = GetComponent<AudioSource>();
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), Player.Instance.GetComponent<Collider>());
     }
 
     // Update is called once per frame
